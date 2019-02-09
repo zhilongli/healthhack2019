@@ -18,9 +18,13 @@ from twilio.twiml.messaging_response import MessagingResponse
 def sms_response(request):
     # Start our TwiML response
     resp = MessagingResponse()
+
     #body = environ['wsgi.input'].read(int(environ.get('CONTENT_LENGTH', 0)))
     incoming_number = request.POST.get('From', False)
     incoming_body = request.POST.get('Body', False)
+    incoming_city = request.POST.get('FromCity', False)
+
+    
     # Add a text message=
     if incoming_body != False:
         print(incoming_body)
