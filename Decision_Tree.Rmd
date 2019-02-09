@@ -1,0 +1,130 @@
+```{r}
+# Data read in by Twilio
+patient_data <- read.csv()
+# Recode data, if needed
+# Clean data, if needed - capitalize all responses
+patient_data <- data.frame(lapply(patient_data), function(x){
+  if(is.character(v)) return(toupper(v))
+  else return(v)
+})
+# Assign potential diagnoses and suggested medications
+for(i in 1:nrow(patient_data()){
+  if(patient_data$cough_duration[i]>=3){
+    patient_data$dx[i] <- tuberculosis
+    cat(paste("Your potential diagnosis may be: tuberculosis", "Some common treatments include: Isoniazid, Rifampin (Rifadin, Rimactane), Ethambutol (Myambutol), Pyrazinamide.", sep="\n"))
+    break
+  }
+  
+   if(patient_data$cough_duration[i]<3 & 
+      patient_data$cough_type[i]=="YES" &
+      patient_data$rash[i]=="YES"){
+     patient_data$dx[i] <- mononucleosis
+     cat(paste("Your potential diagnosis may be: mononucleosis", "Some common treatments include: acetaminophen (Tylenol) or ibuprofen (Advil, Motrin IB.", sep="\n"))
+    break
+   }
+  
+  if(patient_data$cough_duration[i]<3 &
+     patient_data$cough_type[i]=="YES" &
+     patient_data$rash[i]=="NO"
+     patient_data$aches[i]=="YES" &
+     patient_data$chills[i]=="YES" &
+     patient_data$appetite_loss[i]=="YES"){
+    patient_data$dx[i] <- influenza
+    cat(paste("Your potential diagnosis may be: influenza", "Some common treatments include: oseltamivir (Tamiflu) or zanamivir (Relenza).", sep="\n"))
+    break
+  }
+  
+  if(patient_data$cough_duration[i]<3 &
+     patient_data$cough_type[i]=="YES" &
+     patient_data$rash[i]=="NO" &
+     patient_data$aches[i]=="YES" &
+     patient_data$chills[i]=="YES" &
+     patient_data$appetite_loss[i]=="NO"){
+    patient_data$dx[i] <- pharyngitis
+    cat(paste("Your potential diagnosis may be: pharyngitis", "Some common treatments include: acetaminophen (Tylenol).", sep="\n"))
+    break
+  }
+  
+  if(patient_data$cough_duration[i]<3 &
+     patient_data$cough_type[i]=="YES" &
+     patient_data$rash[i]=="NO" &
+     patient_data$aches[i]=="YES" &
+     patient_data$chills[i]=="NO"){
+    patient_data$dx[i] <- cold
+    cat(paste("Your potential diagnosis may be: common cold", "Some common treatments include: acetaminophen (Tylenol), decongestant nasal sprays, and cough syrups.", sep="\n"))
+    break
+  }
+  
+  if(patient_data$cough_duration[i]<3 &
+     patient_data$cough_type[i]=="YES" &
+     patient_data$rash[i]=="NO" &
+     patient_data$aches[i]=="NO" &
+     patient_data$sore_throat[i]=="YES" &
+     patient_data$chest_pain[i]=="YES"){
+    patient_data$dx[i] <- bronchitis
+    cat(paste("Your potential diagnosis may be: bronchitis", "Some common treatments include: cough syrups.", sep="\n"))
+    break
+  }
+  
+  if(patient_data$cough_duration[i]<3 &
+     patient_data$cough_type[i]=="YES" &
+     patient_data$rash[i]=="NO" &
+     patient_data$aches[i]=="NO" &
+     patient_data$sore_throat[i]=="YES" &
+     patient_data$chest_pain[i]=="NO"){
+    patient_data$dx[i] <- strep
+    cat(paste("Your potential diagnosis may be: strep throat", "Some common treatments include: penicillin or amxicillin (Amoxil).", sep="\n"))
+    break
+  }
+  
+  if(patient_data$cough_duration[i]<3 &
+     patient_data$cough_type[i]=="YES" &
+     patient_data$rash[i]=="NO" &
+     patient_data$aches[i]=="NO" &
+     patient_data$sore_throat[i]=="NO" &
+     patient_data$swelling[i]=="YES"){
+    patient_data$dx[i] <- copd
+    cat(paste("Your potential diagnosis may be: chronic obstructive pulmonary disease (COPD).", "Some common treatments include: inhaled bronchodilators, corticosteroids, or theophylline (Theo-24, elixophyline, theochron).", sep="\n"))
+    break
+  }
+  
+  if(patient_data$cough_duration[i]<3 &
+     patient_data$cough_type[i]=="YES" &
+     patient_data$rash[i]=="NO" &
+     patient_data$aches[i]=="NO" &
+     patient_data$sore_throat[i]=="NO" &
+     patient_data$swelling[i]=="NO"){
+    patient_data$dx[i] <- asthma
+    cat(paste("Your potential diagnosis may be: asthma.", "Some common treatments include: inhaled or oral corticosteroids, or theophylline (Theo-24, elixophyline, theochron).", sep="\n"))
+    break
+  }
+  
+  if(patient_data$cough_duration[i]<3 &
+     patient_data$cough_type[i]=="NO" &
+     patient_data$wheezing[i]=="YES"){
+    patient_data$dx[i] <- asthma
+    cat(paste("Your potential diagnosis may be: asthma.", "Some common treatments include: inhaled or oral corticosteroids, or theophylline (Theo-24, elixophyline, theochron).", sep="\n"))
+    break
+  }
+  
+  if(patient_data$cough_duration[i]<3 &
+     patient_data$cough_type[i]=="NO" &
+     patient_data$wheezing[i]=="NO" &
+     patient_data$sore_throat[i]=="YES"){
+    patient_data$dx[i] <- pneumonia
+    cat(paste("Your potential diagnosis may be: pneumonia.", "Some common treatments include: aspirin, nonsteroidal anti-inflammatory drugs (NSAIDs - ibuprofen or naproxen), or acetaminophen (Tylenol).", sep="\n"))
+    break
+  }
+  
+  if(patient_data$cough_duration[i]<3 &
+     patient_data$cough_type[i]=="NO" &
+     patient_data$wheezing[i]=="NO" &
+     patient_data$sore_throat[i]=="NO"){
+    patient_data$dx[i] <- sinusitis
+    cat(paste("Your potential diagnosis may be: sinus infection.", "Some common treatments include: antihistamines (Zyrtec, Alleroff) or decongestants (Sudafed).", sep="\n"))
+    break
+  }
+  
+}
+```
+
