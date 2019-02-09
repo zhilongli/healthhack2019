@@ -1,0 +1,11 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>SMS medical server home</h1>
+  <p>This is the home page displaying a summary of patients and hospitals in the server.</p>
+  <h2>Dynamic content</h2>
+  <p>Current number of patients in the network:</p>
+  <ul>
+    <li><strong>Books:</strong> {{ num_patients }}</li>
+  </ul>
+{% endblock %}

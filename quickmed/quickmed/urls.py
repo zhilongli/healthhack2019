@@ -19,5 +19,5 @@ from django.urls import include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('SMSserver/', include('SMSserver.urls')),
+    path('smsserver/', include('SMSserver.urls')),
 ]
