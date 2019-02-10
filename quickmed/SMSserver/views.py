@@ -29,10 +29,12 @@ sore_throat = "Do you have a sore throat?"
 chest_pain = "Do you have chest pain?"
 swelling = "Are your legs or feet swollen?"
 wheezing = "Do you have wheezing?"
+appetite = "Do you experience a loss of appetite?"
 conclusion = "Thank you for using our system, please refer below for our recommendations.\
  We wish you a speedy recovery!"
-
-
+qn_list = ["How many weeks have you been coughing?",\
+"Do you have phlegm?", "Do you have wheezing?", "Do you have rashes?", "Do you have a sore throat?", "Are you experiencing aches?", "Do you have chills?",\
+ "Do you experience a loss of appetite?", "Do you have a sore throat?", "Do you have chest pain?", "Are your legs or feet swollen?"]
 
 
 @csrf_exempt
@@ -49,8 +51,16 @@ def sms_response(request):
 
     # Add a text message=
     if incoming_body != False:
-        print(str(incoming_body))
-        write2db(str(incoming_body), incoming_number)
-        msg = resp.message("Hi you sent "+ incoming_body)
+        print(incoming_body)
+
+        res = write2db(incoming_body, incoming_number, incoming_zip)
+        print(res)
+        if type(res) is int:
+            if res<0:
+                msg = resp.message("Sad man")
+            else:
+                msg = resp.message(qn_list[res-1])
+        else:
+            msg = resp.message(res)
 
     return HttpResponse(str(resp))
