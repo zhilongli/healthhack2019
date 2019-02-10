@@ -27,15 +27,52 @@ def write2db(incoming_body, incoming_number, zipcode):
 				firstLine = 0
 
 			elif (int(row['Id'])==int(incoming_number) and int(row['curr_node']) != -1):
-				print('here')
+				#print('here')
 				addCopy = 0
 				nodeNum = int(row['curr_node'])
 				field = nodeDict[nodeNum]
-				row[field] = (incoming_body)
-				ret_value = decision_tree.next_qn(nodeNum, incoming_body)
-				row['curr_node'] = ret_value
+				row[field] = incoming_body
+
+				#print(type(incoming_body))
+
+				if (incoming_body.lower().strip() == 'yes' or incoming_body.lower().strip() == 'true') and nodeNum !=1:
+					print(incoming_body.lower().strip())
+					print("true detected")
+
+					response = True
+				elif (incoming_body.lower().strip() == 'no' or incoming_body.lower().strip() == 'false') and nodeNum !=1:
+					print(incoming_body.lower().strip())
+					print("false detected")
+
+					response = False
+
+				elif nodeNum!=1:
+					response = "invalid"
+					return "Sorry, we don't understand your response! Please provide a response that's either \'yes\' or \'no\'"
+
+				else:
+					#print("invalid case detected")
+
+					try:
+						response = int(incoming_body)
+					except:
+						response = "invalid"
+						# if nodeNum==1:
+						return "Sorry, we don't understand your response! Please provide a response that is a whole number"
+                        # else:
+						# 	return "Sorry, we don't understand your response! Please provide a response that is a whole number:)"
+
+
+				print(response)
+
+				ret_value = decision_tree.next_qn(nodeNum, response)
+				#print('next_qn\'s ret_value is' + str(ret_value) )
+				if response!="invalid":
+					row['curr_node'] = ret_value
+				# if row['curr_node'] == "Invalid response received":
+				# 	row['curr_node']=row['curr_node']
 				if type(row['curr_node']) is str:
-					row['curr_node']=-1
+					row['curr_node'] = -1
 
 				row['Time'] = strftime("%Y-%m-%d %H:%M:%S", gmtime())
 
@@ -48,9 +85,10 @@ def write2db(incoming_body, incoming_number, zipcode):
 			row = {'Id': incoming_number, 'curr_node': 1, 'Time': strftime("%Y-%m-%d %H:%M:%S", gmtime()),
 			'Zipcode': zipcode}
 			writer.writerow(row)
+			ret_value = 1
 
 	shutil.move(tempfile.name, filename)
-	return row['curr_node']
+	return ret_value
 
 
 def init():

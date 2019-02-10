@@ -6,6 +6,7 @@ from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from twilio.twiml.messaging_response import MessagingResponse
 
 from update import write2db
+import csv
 
 # # Create your views here.
 # def index(request):
@@ -32,7 +33,8 @@ wheezing = "Do you have wheezing?"
 appetite = "Do you experience a loss of appetite?"
 conclusion = "Thank you for using our system, please refer below for our recommendations.\
  We wish you a speedy recovery!"
-qn_list = ["How many weeks have you been coughing?",\
+qn_list = ["Welcome to to YURI self-diagnosis SMS system, please answer the following questions for us to give you a recommendation.\
+ How many weeks have you been coughing?",\
 "Do you have phlegm?", "Do you have wheezing?", "Do you have rashes?", "Do you have a sore throat?", "Are you experiencing aches?", "Do you have chills?",\
  "Do you experience a loss of appetite?", "Do you have a sore throat?", "Do you have chest pain?", "Are your legs or feet swollen?"]
 
@@ -48,6 +50,9 @@ def sms_response(request):
     incoming_city = request.POST.get('FromCity', False)
     incoming_zip = request.POST.get('FromZip', False)
 
+    filename = 'Physicians_Subsetted.csv'
+    fields = ['Address', 'Zip', 'Phone', 'zip_final']
+
 
     # Add a text message=
     if incoming_body != False:
@@ -57,10 +62,29 @@ def sms_response(request):
         print(res)
         if type(res) is int:
             if res<0:
-                msg = resp.message("Sad man")
+                msg = resp.message("Something went wrong, please restart.")
             else:
                 msg = resp.message(qn_list[res-1])
         else:
             msg = resp.message(res)
+
+            #add healthcare providers
+            if res!="Sorry, we don't understand your response! Please provide a response that's either \'yes\' or \'no\'" and res!= "Sorry, we don't understand your response! Please provide a response that is a whole number":
+                with open(filename, 'r') as csvfile:
+                    reader = csv.DictReader(csvfile, fieldnames=fields)
+                    print("CSV opened!")
+                    counter = 0
+                    for row in reader:
+                        if counter>1:
+                            break
+                        if row['zip_final']==incoming_zip:
+                            print("found zip code!!")
+                            address = row['Address']
+                            phone = row['Phone']
+                            msg_str = "Here is a provider that you can go to: " + str(address)
+                            msg_str += " Here is their phone number: " + str(phone)
+                            new_msg = resp.message(msg_str)
+                            counter +=1
+
 
     return HttpResponse(str(resp))
