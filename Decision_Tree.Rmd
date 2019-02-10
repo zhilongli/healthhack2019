@@ -7,8 +7,24 @@ patient_data <- data.frame(lapply(patient_data), function(x){
   if(is.character(v)) return(toupper(v))
   else return(v)
 })
+# Sample data
+X <- 10; sample(c("NO","YES"), replace=TRUE, size=X)
+
+cough_duration <- sample(c("NO","YES"), replace=T, size=10)
+cough_type <- sample(c("NO","YES"), replace=T, size=10)
+rash <- sample(c("NO","YES"), replace=T, size=10)
+aches <- sample(c("NO","YES"), replace=T, size=10)
+chills <- sample(c("NO","YES"), replace=T, size=10)
+sore_throat <- sample(c("NO","YES"), replace=T, size=10)
+chest_pain <- sample(c("NO","YES"), replace=T, size=10)
+swelling <- sample(c("NO","YES"), replace=T, size=10)
+appetite_loss <- sample(c("NO","YES"), replace=T, size=10)
+wheezing <- sample(c("NO","YES"), replace=T, size=10)
+patient_data <- data.frame(cough_duration, cough_type, rash, aches, chills, sore_throat, chest_pain, swelling, appetite_loss, wheezing)
+patient_data$id <- rownames(patient_data)
+
 # Assign potential diagnoses and suggested medications
-for(i in 1:nrow(patient_data()){
+for(i in 1:nrow(patient_data)){
   if(patient_data$cough_duration[i]>=3){
     patient_data$dx[i] <- tuberculosis
     cat(paste("Your potential diagnosis may be: tuberculosis", "Some common treatments include: Isoniazid, Rifampin (Rifadin, Rimactane), Ethambutol (Myambutol), Pyrazinamide.", sep="\n"))
@@ -25,7 +41,7 @@ for(i in 1:nrow(patient_data()){
   
   if(patient_data$cough_duration[i]<3 &
      patient_data$cough_type[i]=="YES" &
-     patient_data$rash[i]=="NO"
+     patient_data$rash[i]=="NO" &
      patient_data$aches[i]=="YES" &
      patient_data$chills[i]=="YES" &
      patient_data$appetite_loss[i]=="YES"){
@@ -124,7 +140,6 @@ for(i in 1:nrow(patient_data()){
     cat(paste("Your potential diagnosis may be: sinus infection.", "Some common treatments include: antihistamines (Zyrtec, Alleroff) or decongestants (Sudafed).", sep="\n"))
     break
   }
-  
 }
 ```
 
