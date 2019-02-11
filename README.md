@@ -14,6 +14,7 @@ An Automated Text System that sends diagnosis (based on a decision tree) and tre
 3. Navigate to the "*quickmed*" folder and run "python manage.py runserver"
 4. Text any message to the twilio number and YuRI will initialize the diagnosis
 
-**Other Features:**
-While a patient is chatting with YuRI, a medical record of the patient would be automatically stored in "*database.csv*" ther "*quickmed*" folder.
+**Patient Database:**
+
+While a patient is chatting with YuRI, a medical record of the patient would be automatically stored in "*database.csv*" ther "*quickmed*" folder in real time.
     
