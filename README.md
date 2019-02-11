@@ -16,5 +16,5 @@ An Automated Text System that sends diagnosis (based on a decision tree) and tre
 
 **Patient Database:**
 
-While a patient is chatting with YuRI, a medical record of the patient would be automatically stored in "*database.csv*" ther "*quickmed*" folder in real time.
+While a patient is chatting with YuRI, a medical record of the patient would be automatically stored in "*database.csv*" under the "*quickmed*" folder in real time.
     
