@@ -56,10 +56,8 @@ def sms_response(request):
 
     # Add a text message=
     if incoming_body != False:
-        print(incoming_body)
 
         res = write2db(incoming_body, incoming_number, incoming_zip)
-        print(res)
         if type(res) is int:
             if res<0:
                 msg = resp.message("Something went wrong, please restart.")
@@ -72,13 +70,11 @@ def sms_response(request):
             if res!="Sorry, we don't understand your response! Please provide a response that's either \'yes\' or \'no\'" and res!= "Sorry, we don't understand your response! Please provide a response that is a whole number":
                 with open(filename, 'r') as csvfile:
                     reader = csv.DictReader(csvfile, fieldnames=fields)
-                    print("CSV opened!")
                     counter = 0
                     for row in reader:
                         if counter>1:
                             break
                         if row['zip_final']==incoming_zip:
-                            print("found zip code!!")
                             address = row['Address']
                             phone = row['Phone']
                             msg_str = "Here is a provider that you can go to: " + str(address)
